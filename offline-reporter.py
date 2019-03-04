@@ -39,7 +39,7 @@ def isOffline():
         client.getresponse().read()
         client.close()
         return False
-    except Exception as e:
+    except:
         return True
 
 def logConnectionError():
