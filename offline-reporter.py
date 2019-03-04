@@ -1,23 +1,37 @@
 #!/usr/bin/python3
 
-import time
-import http.client
+from http.client import HTTPSConnection
 import logging
+import time
+from datetime import date
+from string import Template
 
 CONNECTION_TIMEOUT = 5
 THREAD_SLEEP = 10
 
-logging.basicConfig(filename='errors.log', format='%(asctime)s %(message)s', level=logging.ERROR)
-
 def main():
+    startLogger()
+
     while True:
         if True == isOffline():
             logConnectionError()
             threadSleep = THREAD_SLEEP - CONNECTION_TIMEOUT
-        else
+        else:
             threadSleep = THREAD_SLEEP
         
         time.sleep(threadSleep)
+
+def startLogger():
+    today = date.today().isoformat()
+    filenameTpl = Template('errors_$when.log')
+    datedFilename = filenameTpl.substitute(when=today)
+
+    logging.basicConfig(
+        filename=datedFilename, 
+        format='%(asctime)s %(message)s', 
+        level=logging.ERROR
+    )
+
 
 def isOffline():
     try:
