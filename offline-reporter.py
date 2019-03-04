@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 
-from http.client import HTTPSConnection
 import logging
 import time
+
+from http.client import HTTPSConnection
 from datetime import date
 from string import Template
 
