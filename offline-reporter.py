@@ -28,12 +28,12 @@ def startLogger():
         level = logging.ERROR
     )
 
-def isOffline(host = '8.8.8.8', port = 53):
+def isOffline():
     try:
         socket.setdefaulttimeout(CONNECTION_TIMEOUT)
-        socket.socket().connect((host, port))
+        socket.socket().connect(('8.8.8.8', 53))
         return False
-    except Exception as e:
+    except Exception:
         return True
 
 def logConnectionError():
