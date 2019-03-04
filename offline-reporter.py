@@ -23,19 +23,17 @@ def main():
 
 def startLogger():
     today = date.today().isoformat()
-    filenameTpl = Template('errors_$when.log')
-    datedFilename = filenameTpl.substitute(when=today)
+    datedFilename = 'errors_{when}.log'.format(when = today)
 
     logging.basicConfig(
-        filename=datedFilename, 
-        format='%(asctime)s %(message)s', 
-        level=logging.ERROR
+        filename = datedFilename, 
+        format = '%(asctime)s %(message)s', 
+        level = logging.ERROR
     )
-
 
 def isOffline():
     try:
-        client = http.client.HTTPSConnection('canihazip.com', timeout=CONNECTION_TIMEOUT)
+        client = http.client.HTTPSConnection('canihazip.com', timeout = CONNECTION_TIMEOUT)
         client.request('GET', '/s')
         client.getresponse().read()
         client.close()
