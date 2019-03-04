@@ -31,7 +31,8 @@ def startLogger():
 def isOffline():
     try:
         socket.setdefaulttimeout(CONNECTION_TIMEOUT)
-        socket.socket().connect(('8.8.8.8', 53))
+        testSocket = socket.socket().connect(('8.8.8.8', 53))
+        testSocket.close()
         return False
     except Exception:
         return True
