@@ -2,10 +2,9 @@
 
 import logging
 import time
+import socket
 
-from http.client import HTTPSConnection
-from datetime import date
-from string import Template
+from datetime import datetime
 
 CONNECTION_TIMEOUT = 5
 THREAD_SLEEP = 10
@@ -16,14 +15,11 @@ def main():
     while True:
         if True == isOffline():
             logConnectionError()
-            threadSleep = THREAD_SLEEP - CONNECTION_TIMEOUT
-        else:
-            threadSleep = THREAD_SLEEP
         
-        time.sleep(threadSleep)
+        time.sleep(THREAD_SLEEP)
 
 def startLogger():
-    today = date.today().isoformat()
+    today = datetime.now().date().isoformat()
     datedFilename = 'errors_{when}.log'.format(when = today)
 
     logging.basicConfig(
@@ -32,14 +28,12 @@ def startLogger():
         level = logging.ERROR
     )
 
-def isOffline():
+def isOffline(host = '8.8.8.8', port = 53):
     try:
-        client = http.client.HTTPSConnection('canihazip.com', timeout = CONNECTION_TIMEOUT)
-        client.request('GET', '/s')
-        client.getresponse().read()
-        client.close()
+        socket.setdefaulttimeout(CONNECTION_TIMEOUT)
+        socket.socket().connect((host, port))
         return False
-    except:
+    except Exception as e:
         return True
 
 def logConnectionError():
