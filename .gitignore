@@ -1,5 +1,12 @@
+# ide
 .idea
 *.iml
-*.log
 .vscode
+
+# python
 venv
+__pycache__
+
+# program
+*.log
+settings.py

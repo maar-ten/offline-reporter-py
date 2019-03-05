@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 
 import logging
+import requests
 import socket
 from datetime import datetime, timedelta
-
 from rx import Observable
+
+import settings
 
 CONNECTION_TIMEOUT_SEC = 5
 INTERVAL_TIME_MS = 2000
@@ -27,12 +29,11 @@ def main():
         .map(lambda connectivity_changed: connectivity_changed.interval) \
         .map(lambda interval: interval + timedelta(milliseconds=INTERVAL_TIME_MS)) \
         .map(lambda timedelta: timedelta.total_seconds()) \
-        .map(lambda seconds: int(seconds)) \
-        .map(lambda seconds: '{sec} seconds'.format(sec=seconds)) \
-        .map(lambda seconds_str: 'Internet was down for {sec_str}'.format(sec_str=seconds_str))
+        .map(lambda seconds: 'Internet was down for {seconds} seconds'.format(seconds=int(seconds)))
 
-    how_long_was_the_internet_down.subscribe(lambda interval: print(interval))
+    how_long_was_the_internet_down.subscribe(lambda message: post_to_slack(message))
 
+    # ensure the program keeps running while the observable interval runs in a separate thread
     input('Program is running. Press enter to exit\n')
 
 
@@ -58,6 +59,11 @@ def is_online():
 
 def log_connection_error():
     logging.error('cannot reach the internet')
+
+
+def post_to_slack(message):
+    payload = {'text': message}
+    requests.post(settings.slack_webhook_url, json=payload)
 
 
 if __name__ == '__main__':
