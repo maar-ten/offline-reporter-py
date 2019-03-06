@@ -1,7 +1,7 @@
 # Offline Reporter
 A Python program that periodically checks for an internet connection and logs any downtime it detects.
 
-When the connection is re-established it calculates how long has been down for and sends a message to a Slack channel.
+When the connection is re-established it calculates how long it was down and sends a message to a Slack channel.
 
 It's not very robust, because it relies on a single website.
 
