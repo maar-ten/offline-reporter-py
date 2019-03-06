@@ -5,8 +5,6 @@ When the connection is re-established it calculates how long it was down and sen
 
 It's not very robust, because it relies on a single website.
 
-Also this is my first time writing Python so it might not be up to the general standards.
-
 To correctly configure the program you need to create a settings.py file in the root of the project and add 
 the following content to it:
 

@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import time
 
 import logging
@@ -11,7 +9,7 @@ from rx import Observable
 import settings
 
 CONNECTION_TIMEOUT_SEC = 5
-INTERVAL_TIME_MS = 2000
+INTERVAL_TIME_MS = 10000
 
 
 def main():
