@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+import time
+
 import logging
 import requests
 import socket
@@ -34,7 +36,8 @@ def main():
     how_long_was_the_internet_down.subscribe(lambda message: post_to_slack(message))
 
     # ensure the program keeps running while the observable interval runs in a separate thread
-    input('Program is running. Press enter to exit\n')
+    while True:
+        time.sleep(10)
 
 
 def start_logger():
